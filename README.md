@@ -44,6 +44,26 @@ Use `.claude/skills/` inside a project instead to scope it to that project.
 
 To install a specific release rather than the latest, clone its tag: `git clone --branch vX.Y.Z https://github.com/squirrel-notes/skills.git`.
 
+**Claude Desktop (and claude.ai).** Skills are uploaded as a ZIP with the skill folder at its root:
+
+```sh
+git clone https://github.com/squirrel-notes/skills.git
+(cd skills/skills && zip -r ../../squirrel-notes.zip squirrel-notes)
+```
+
+Then, in Claude, open **Customize → Skills**, choose **+ → Upload a skill** and pick `squirrel-notes.zip`. Skills need code execution, which is under **Settings → Capabilities** (on Team and Enterprise, an owner enables it in the organisation settings). See [Use skills in Claude](https://support.claude.com/en/articles/12512180-use-skills-in-claude).
+
+The skill only guides the agent: Claude Desktop also needs the Squirrel Notes MCP server in its configuration (**Settings → Developer → Edit Config**), as described in [`references/setup.md`](skills/squirrel-notes/references/setup.md) and the [MCP server's README](https://www.npmjs.com/package/@squirrelnotes.app/mcp-embeddings). Uploading a newer version replaces the old one.
+
+**OpenClaw.** Install the skill folder with the OpenClaw CLI:
+
+```sh
+git clone https://github.com/squirrel-notes/skills.git
+openclaw skills install ./skills/skills/squirrel-notes
+```
+
+Or copy `skills/squirrel-notes/` into `~/.openclaw/skills/` (every agent) or `<workspace>/skills/` (one workspace). New sessions pick it up. Add the MCP server under `mcp.servers` in OpenClaw's configuration (or with `openclaw mcp add`), and keep `SQUIRREL_API_KEY` and `SQUIRREL_PASSPHRASE` in OpenClaw's secret storage rather than in the config file. See OpenClaw's [skills](https://docs.openclaw.ai/tools/skills) and [MCP](https://docs.openclaw.ai/tools/mcp) docs.
+
 **OpenCode and other agents that read `SKILL.md` skills.** Copy `skills/squirrel-notes/` into the agent's skills directory (for OpenCode, `.opencode/skills/`).
 
 ## Versions
