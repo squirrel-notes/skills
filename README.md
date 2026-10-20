@@ -44,11 +44,11 @@ Use `.claude/skills/` inside a project instead to scope it to that project.
 
 To install a specific release rather than the latest, clone its tag: `git clone --branch vX.Y.Z https://github.com/squirrel-notes/skills.git`.
 
-**Claude Desktop (and claude.ai).** Download [`squirrel-notes.zip`](https://github.com/squirrel-notes/skills/raw/main/squirrel-notes.zip). In Claude, open **Customize → Skills**, choose **+ → Upload a skill** and pick the file. Skills need code execution, which is under **Settings → Capabilities** (on Team and Enterprise, an owner enables it in the organisation settings). See [Use skills in Claude](https://support.claude.com/en/articles/12512180-use-skills-in-claude).
+**Claude Desktop (and claude.ai).** Download [`squirrel-notes.zip`](https://github.com/squirrel-notes/skills/releases/latest/download/squirrel-notes.zip) from the latest release. In Claude, open **Customize → Skills**, choose **+ → Create skill → Upload a skill** and pick the file. Skills need code execution, which is under **Settings → Capabilities** (on Team and Enterprise, an owner enables it in the organisation settings). See [Use skills in Claude](https://support.claude.com/en/articles/12512180-use-skills-in-claude).
 
-For a specific release, download `https://github.com/squirrel-notes/skills/raw/vX.Y.Z/squirrel-notes.zip` (releases tagged before the download was added have no ZIP).
+For a specific release, download `https://github.com/squirrel-notes/skills/releases/download/vX.Y.Z/squirrel-notes.zip` (only releases on the [Releases](https://github.com/squirrel-notes/skills/releases) page have one).
 
-The skill only guides the agent: Claude Desktop also needs the Squirrel Notes MCP server in its configuration (**Settings → Developer → Edit Config**), as described in [`references/setup.md`](skills/squirrel-notes/references/setup.md) and the [MCP server's README](https://www.npmjs.com/package/@squirrelnotes.app/mcp-embeddings). Uploading a newer version replaces the old one.
+The skill only guides the agent: Claude Desktop also needs the Squirrel Notes MCP server in its configuration (**Settings → Developer → Edit Config**), as described in [`references/setup.md`](skills/squirrel-notes/references/setup.md) and the [MCP server's README](https://www.npmjs.com/package/@squirrelnotes.app/mcp-embeddings).
 
 **OpenClaw.** Install the skill folder with the OpenClaw CLI:
 
@@ -63,14 +63,15 @@ Or copy `skills/squirrel-notes/` into `~/.openclaw/skills/` (every agent) or `<w
 
 ## Versions
 
-This repository is published automatically when a Squirrel Notes release changes the skill: the commit `Release vX.Y.Z` and the tag `vX.Y.Z` hold the skill that matches that release's MCP server. A release that does not change the skill adds no commit or tag. Changes made here directly are replaced by the next publish.
+This repository is published automatically when a Squirrel Notes release changes the skill: the commit `Release vX.Y.Z` and the tag `vX.Y.Z` hold the skill that matches that release's MCP server, and the GitHub release `vX.Y.Z` carries `squirrel-notes.zip`. A release that does not change the skill adds no commit, tag or release, so the latest release is the newest skill. Changes made here directly are replaced by the next publish.
 
-`squirrel-notes.zip` is built by the same publish from `skills/squirrel-notes/` and holds exactly those files, unchanged and uncompressed, in a `squirrel-notes/` folder. To check a copy against the folder beside it:
+A release's `squirrel-notes.zip` is built by the same publish from `skills/squirrel-notes/` at its tag and holds exactly those files, unchanged and uncompressed, in a `squirrel-notes/` folder. To check a downloaded copy against the tag it came from:
 
 ```sh
+git clone --branch vX.Y.Z https://github.com/squirrel-notes/skills.git
 check=$(mktemp -d)
 unzip -q squirrel-notes.zip -d "$check"
-diff -r "$check/squirrel-notes" skills/squirrel-notes && echo same
+[ "$(ls -A "$check")" = squirrel-notes ] && diff -r "$check/squirrel-notes" skills/skills/squirrel-notes && echo same
 ```
 
 ## Privacy
