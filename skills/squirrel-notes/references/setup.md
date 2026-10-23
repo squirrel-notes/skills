@@ -24,3 +24,7 @@ Keep the key and passphrase in your MCP client's configuration or a secrets mana
 ## Checking it works
 
 Call `get_context`. A briefing (even an empty one) means the server unlocked your data. An error naming `SQUIRREL_API_KEY` means the key was rejected or the account isn't Pro. A network error names its cause, such as an untrusted certificate or a refused connection.
+
+## Monthly API calls
+
+A Pro account has a monthly allowance of API calls, counted per account and reset at 00:00 UTC on the 1st; the app shows how much is used. Every tool that reaches the API uses at least one call. The allowance is not enforced yet. Once it is, a refused memory tool says the account has used its monthly API calls and when they resume, and a note tool's error carries the server's message `Monthly API call limit reached`. Nothing was written by the refused call and the key is still valid. Retrying will not help until the calls resume, so tell the user instead.
