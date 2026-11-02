@@ -67,10 +67,11 @@ Everything you write is flagged `needsReview` for the user. See `references/writ
 
 ## 4. Correct, don't delete
 
-You can't delete or pin memories; only the user can, in the app. To change what's on record:
+You can't delete or pin memories; only the user can, in the app. Any change you make unpins the memories it touches, so if one was pinned, tell the user they can pin it again. To change what's on record:
 
 - **`supersede_memory`** when a memory is outdated or wrong and you have the correct version. Always give a `reason`. The old memory is kept and linked to the new one. You can refile while superseding (`entity`, `category`, `tags`, `keywords`).
   - Replacing it with unrelated text is refused. That usually means you want `remember_memory`. Pass `confirmUnrelated: true` only if it really replaces the old one.
+  - To change a decision's status, supersede it with the new `decisionStatus`; don't save a second decision.
 - **`invalidate_memory`** when a memory is simply wrong and there's nothing to replace it with. Give a `reason`.
 - **`record_conflict`** when two memories disagree and you can't tell which is right. Both stay in effect, marked `disputed`. Settle it with **`resolve_conflict`** once you have evidence. Don't pick one silently.
 - **`memory_history`** shows who changed a memory and when, for working out how a memory got the way it is.
@@ -89,11 +90,12 @@ For notes:
 - Find them with `list_notes` and `search_notes`, which match titles and are fast.
 - `search_note_content` decrypts every note, so it's slow; use it only when titles won't do. It returns the matching lines, not whole notes.
 - Read a note before changing it: `get_note` for a short one. For a long one (over about 8,000 characters), call `get_note_outline` and then `read_note` for just the section you need.
-- Change part of a note with `edit_note` (one exact passage), `replace_section` or `insert_in_section`, passing the `updatedAt` you read as `expectedUpdatedAt`. Remove a whole section, heading included, with `delete_section`; for the rare addition nothing else can place, `insert_at_line` (it always needs `expectedUpdatedAt`; see [notes](references/notes.md)). `update_note` replaces the whole content, so keep it for short notes and full rewrites.
+- Change part of a note with `edit_note` (one exact passage), `replace_section` or `insert_in_section`, passing the `updatedAt` you read as `expectedUpdatedAt`. Remove a whole section, heading included, with `delete_section`; for the rare addition nothing else can place, `insert_at_line` (it always needs `expectedUpdatedAt`; see [notes](references/notes.md)). `update_note` replaces the whole content and doesn't check whether the note changed since you read it, so read it just before, and keep it for short notes and full rewrites.
 - Prefer `append_to_note` for logs and running lists.
-- `set_note_tags` replaces all of a note's tags, so merge with the current ones first.
+- A task is a Markdown checkbox (`- [ ]`). Give it a due date by putting `@due(YYYY-MM-DD)` on its line, with a real date, never a relative one; the app's Tasks page reads it. See [notes](references/notes.md) for the format and for ticking tasks.
+- `set_note_tags` replaces all of a note's tags, so merge with the current ones first. Tag ids come from `list_tags`. Collections, tags, saved searches, Trash and attachments are in [notes](references/notes.md).
 
-**Never share a note (`share_note`) unless the user asks for it.** It publishes a public link. See `references/notes.md`.
+**Never share a note (`share_note`) unless the user asks for it.** It publishes a public link, with the note's text but not its attachments. See `references/notes.md`.
 
 ## 6. Privacy
 

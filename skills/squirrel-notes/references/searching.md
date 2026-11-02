@@ -51,3 +51,5 @@
 
 - `get_memory_profile` returns the memories the user has pinned. It's the short, always-relevant set.
 - `get_context` includes that profile, plus conflicts, decisions, due dates, the review count and recent changes. Use it at session start, and again only if the session is long and things changed.
+- `get_context` narrows like a search: `entity` applies to every section except the profile, `tags` and `excludeTags` to every section, and `decisionStatus` to the decisions it lists.
+- In its `changes`, `complete: false` means the newest changes didn't fit, so call again with a later `since`; `available: false` means the history couldn't be read, though the rest of the briefing is complete.

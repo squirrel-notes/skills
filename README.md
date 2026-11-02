@@ -18,7 +18,7 @@ skills/squirrel-notes/
     ├── searching.md      how search ranks, reading results, filters
     ├── writing.md        when and how to save a memory, keywords, decisions
     ├── correcting.md     supersede, invalidate, conflicts, history
-    ├── notes.md          working with notes
+    ├── notes.md          working with notes: editing, tasks, organising, sharing
     └── setup.md          configuring the MCP server
 ```
 
